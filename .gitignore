@@ -1,0 +1,49 @@
+# MacOS system files
+.DS_Store
+
+# VSCode settings directory
+.vscode
+
+# IntelliJ IDEA project settings
+.idea
+
+# Generated reports
+.coverage
+coverage.xml
+cobertura.xml
+testLog.xml
+
+# Caches
+__pycache__
+.pytest_cache
+
+# Generated debug files
+generated_prompt.md
+test_results.html
+run.log
+*.db
+
+# PyInstaller Generated files
+/build/
+/dist/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+env/
+venv/
+.venv/
+pyvenv.cfg
+pip-log.txt
+pip-delete-this-directory.txt
+*.spec
+
+# Secrets
+.env

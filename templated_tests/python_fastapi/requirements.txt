@@ -1,0 +1,5 @@
+fastapi
+httpx
+pytest
+pytest-cov
+pydantic[email]
