@@ -1,6 +1,6 @@
 # Qodo Cover GitHub Action Example
 
-This repo shows how the [Qodo Cover GitHub Action](https://github.com/qodo-ai/qodo-cover) can be added to your repository.
+This repo shows how the [Qodo Cover GitHub Action](https://github.com/qodo-ai/qodo-ci) can be added to your repository.
 
 ## Workflow
 
