@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit>
+  <testsuites>
+    <testsuite name="MyAppTestSuite">
+      <directory>tests</directory>
+    </testsuite>
+  </testsuites>
+
+  <coverage>
+    <include>
+      <directory>src</directory>
+    </include>
+  </coverage>
+</phpunit>
