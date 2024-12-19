@@ -1,0 +1,50 @@
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+    id 'jacoco'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'com.amazonaws:aws-lambda-java-core:1.2.2'
+    implementation 'com.amazonaws:aws-lambda-java-events:3.11.0'
+    implementation 'com.amazonaws:aws-lambda-java-log4j2:1.5.1'
+    implementation 'org.json:json:20210307'
+    testImplementation 'org.mockito:mockito-core:4.11.0' // Add Mockito library
+    testImplementation 'junit:junit:4.13.2'
+}
+
+sourceCompatibility = 21
+targetCompatibility = 21
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'ai.qodo.JokeHandler' // Change this to your handler class
+        )
+    }
+
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+shadowJar {
+    archiveClassifier.set('') // This will append '-all' to the JAR name
+    manifest {
+        attributes(
+                'Main-Class': 'ai.qodo.JokeHandler' // Ensure this is your main class
+        )
+    }
+}
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.required = true
+        csv.required = true
+    }
+}
