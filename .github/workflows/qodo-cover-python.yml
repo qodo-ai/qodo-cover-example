@@ -1,26 +1,25 @@
-name: Run the qodo-cover-pr action
+name: Run the qodo-cover action (Python)
 
 on:
-  pull_request:
-    branches:
-      - main
-    types:
-      - opened  # Trigger only when a pull request is opened
+  workflow_dispatch:
+    inputs:
+      desired_coverage:
+        description: "Desired coverage percentage"
+        required: false
+        default: "70"
 
 permissions:
-  pull-requests: write  # Allows commenting on pull requests
-  contents: write  # Allows reading and writing files
+  pull-requests: write
+  contents: write
 
 jobs:
-  run-qodo-cover:
-    if: ${{ github.actor != 'github-actions[bot]' }}
+  run-qodo-cover-python:
     runs-on: ubuntu-22.04
     steps:
-      - name: Checkout PR branch
+      - name: Checkout code
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0
-          ref: ${{ github.event.pull_request.head.ref }}
+          ref: ${{ github.ref }}
 
       - name: Install system dependencies
         run: |
@@ -34,7 +33,7 @@ jobs:
           pip install -r templated_tests/python_fastapi/requirements.txt
 
       - name: Qodo Cover
-        uses: qodo-ai/qodo-ci/.github/actions/qodo-cover-pr@v0.1.3
+        uses: qodo-ai/qodo-ci/.github/actions/qodo-cover@v0.1.3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           project_language: python
@@ -42,6 +41,7 @@ jobs:
           code_coverage_report_path: templated_tests/python_fastapi/coverage.xml
           test_command: "pytest --cov=. --cov-report=xml --cov-report=term"
           model: gpt-4o
-          desired_coverage: 70
+          desired_coverage: ${{ github.event.inputs.desired_coverage }}
+          branch: ${{ github.ref_name }}
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
