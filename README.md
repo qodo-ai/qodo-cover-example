@@ -33,4 +33,4 @@ While developing the Qodo Cover agent we tested it on some open source repositor
 
 - [hugginface/pytorch-image-models](https://github.com/huggingface/pytorch-image-models/pull/2331)
 - [facebook/prophet](https://github.com/facebook/prophet/pull/2640)
-  [microsoft/onnxscript](https://github.com/microsoft/onnxscript/pull/1967)
+- [microsoft/onnxscript](https://github.com/microsoft/onnxscript/pull/1967)
