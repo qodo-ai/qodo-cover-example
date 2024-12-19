@@ -1,0 +1,14 @@
+# Composer dependencies
+vendor/
+
+# Coverage reports
+coverage.xml
+coverage/
+
+# Editor/OS files
+.idea/
+.vscode/
+.DS_Store
+
+# phpunit
+.phpunit.result.cache

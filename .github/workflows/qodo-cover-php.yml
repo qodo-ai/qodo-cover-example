@@ -1,0 +1,56 @@
+name: Run the qodo-cover action (PHP)
+
+on:
+  workflow_dispatch:
+    inputs:
+      desired_coverage:
+        description: "Desired coverage percentage"
+        required: false
+        default: "70"
+
+permissions:
+  pull-requests: write
+  contents: write
+
+jobs:
+  run-qodo-cover-php:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y php-cli php-xml php-mbstring unzip php-xdebug
+          php -v
+          composer -V || (php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
+          && php composer-setup.php \
+          && php -r "unlink('composer-setup.php');" \
+          && sudo mv composer.phar /usr/local/bin/composer)
+
+      - name: Configure Xdebug for coverage
+        run: |
+          echo 'zend_extension="xdebug.so"' | sudo tee -a /etc/php/8.1/cli/conf.d/20-xdebug.ini
+          echo 'xdebug.mode=coverage' | sudo tee -a /etc/php/8.1/cli/conf.d/20-xdebug.ini
+          php -m | grep xdebug
+
+      - name: Install app dependencies
+        run: |
+          composer install
+
+      - name: Qodo Cover
+        uses: qodo-ai/qodo-ci/.github/actions/qodo-cover@v0.1.3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          project_language: php
+          project_root: templated_tests/php/myapp
+          code_coverage_report_path: templated_tests/php/myapp/coverage.xml
+          test_command: "XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-cobertura coverage.xml --disable-coverage-ignore"
+          model: gpt-4o
+          desired_coverage: ${{ github.event.inputs.desired_coverage }}
+          branch: ${{ github.ref_name }}
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
