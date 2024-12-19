@@ -7,7 +7,7 @@ The repo linked above defines 2 actions:
 - `qodo-cover`: This action runs the Qodo Cover agent and is intended to be manually triggered. The agent tries to expand coverage on all project files of the specified language.
 - `qodo-cover-pr`: This action runs the Qodo Cover agent in "pr" mode, and is intended to be triggered by pull requests. In "pr" mode, the agent tries to expand coverage only on *modified files* of the specified language.
 
-In both of the above actions if the successfully increases coverage it will create a PR with the added tests as well as a coverage improvement report. See [this PR](https://github.com/qodo-ai/qodo-ci-example/pull/19) as an example.
+In both of the above actions if the agent successfully increases coverage it will create a PR with the added tests as well as a coverage improvement report. See [this PR](https://github.com/qodo-ai/qodo-ci-example/pull/19) as an example.
 
 ## Supported languages
 
