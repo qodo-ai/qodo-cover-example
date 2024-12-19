@@ -1,0 +1,52 @@
+name: Run the qodo-cover action
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: "Branch to run on"
+        required: false
+        default: "main"
+      desired_coverage:
+        description: "Desired coverage percentage"
+        required: false
+        default: "70"
+
+permissions:
+  pull-requests: write
+  contents: write
+
+jobs:
+  run-qodo-cover:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout specified branch
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.inputs.branch }}
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3 python3-dev python3-pip
+          python3 --version
+
+      - name: Install app dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r templated_tests/python_fastapi/requirements.txt
+
+      - name: Qodo Cover
+        uses: qodo-ai/qodo-ci/.github/actions/qodo-cover@v0.1.3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          project_language: python
+          project_root: templated_tests/python_fastapi
+          code_coverage_report_path: templated_tests/python_fastapi/coverage.xml
+          test_command: "pytest --cov=. --cov-report=xml --cov-report=term"
+          model: gpt-4o
+          desired_coverage: ${{ github.event.inputs.desired_coverage }}
+          branch: ${{ github.event.inputs.branch }}
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
