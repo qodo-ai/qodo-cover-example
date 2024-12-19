@@ -1,4 +1,4 @@
-name: Run the qodo-cover action
+name: Run the qodo-cover-pr action
 
 on:
   pull_request:
@@ -13,6 +13,7 @@ permissions:
 
 jobs:
   run-qodo-cover:
+    if: ${{ github.actor != 'github-actions[bot]' }}
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout PR branch
@@ -33,7 +34,7 @@ jobs:
           pip install -r templated_tests/python_fastapi/requirements.txt
 
       - name: Qodo Cover
-        uses: qodo-ai/qodo-ci/.github/actions/qodo-cover-pr@v0.1.2
+        uses: qodo-ai/qodo-ci/.github/actions/qodo-cover-pr@v0.1.3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           project_language: python
@@ -41,5 +42,6 @@ jobs:
           code_coverage_report_path: templated_tests/python_fastapi/coverage.xml
           test_command: "pytest --cov=. --cov-report=xml --cov-report=term"
           model: gpt-4o
+          desired_coverage: 70
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
