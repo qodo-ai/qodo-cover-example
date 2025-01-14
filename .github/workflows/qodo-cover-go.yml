@@ -28,7 +28,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          go install github.com/boumenot/gocover-cobertura
+          go install github.com/boumenot/gocover-cobertura@latest
 
       - name: Qodo Cover
         uses: qodo-ai/qodo-ci/.github/actions/qodo-cover@v0.1.4
