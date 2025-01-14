@@ -13,7 +13,7 @@ permissions:
   contents: write
 
 jobs:
-  run-qodo-cover-java:
+  run-qodo-cover-kotlin:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout code
