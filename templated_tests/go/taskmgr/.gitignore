@@ -1,0 +1,6 @@
+taskmgr
+coverage.xml
+coverage.out
+!cmd/taskmgr
+tasks.json
+out.md
