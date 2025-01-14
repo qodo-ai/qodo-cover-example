@@ -28,8 +28,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          go get github.com/boumenot/gocover-cobertura
-        working-directory: templated_tests/go/taskmgr
+          go install github.com/boumenot/gocover-cobertura
 
       - name: Qodo Cover
         uses: qodo-ai/qodo-ci/.github/actions/qodo-cover@v0.1.4
