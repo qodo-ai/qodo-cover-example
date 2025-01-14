@@ -1,0 +1,43 @@
+name: Run the qodo-cover action (Java)
+
+on:
+  workflow_dispatch:
+    inputs:
+      desired_coverage:
+        description: "Desired coverage percentage"
+        required: false
+        default: "70"
+
+permissions:
+  pull-requests: write
+  contents: write
+
+jobs:
+  run-qodo-cover-java:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Qodo Cover
+        uses: qodo-ai/qodo-ci/.github/actions/qodo-cover@v0.1.4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          project_language: java
+          project_root: templated_tests/kotlin/taskmgr
+          code_coverage_report_path: templated_tests/kotlin/taskmgr/build/reports/jacoco/test/jacocoTestReport.xml
+          coverage_type: jacoco
+          test_command: "./gradlew clean test jacocoTestReport"
+          model: gpt-4o
+          desired_coverage: ${{ github.event.inputs.desired_coverage }}
+          branch: ${{ github.ref_name }}
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}

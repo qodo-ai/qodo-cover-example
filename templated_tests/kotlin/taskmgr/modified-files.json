@@ -1,0 +1,6 @@
+[
+    "src/main/kotlin/taskmgr/tasks/TaskManager.kt",
+    "src/main/kotlin/taskmgr/tasks/FileStore.kt",
+    "src/main/kotlin/taskmgr/Main.kt",
+    "src/test/kotlin/taskmgr/tasks/TaskManagerTest.kt"
+]
