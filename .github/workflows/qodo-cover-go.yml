@@ -1,0 +1,47 @@
+name: Run the qodo-cover action (Go)
+
+on:
+  workflow_dispatch:
+    inputs:
+      desired_coverage:
+        description: "Desired coverage percentage"
+        required: false
+        default: "70"
+
+permissions:
+  pull-requests: write
+  contents: write
+
+jobs:
+  run-qodo-cover-go:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.21'
+
+      - name: Install dependencies
+        run: |
+          go get github.com/boumenot/gocover-cobertura
+        working-directory: templated_tests/go/myapp
+
+      - name: Qodo Cover
+        uses: qodo-ai/qodo-ci/.github/actions/qodo-cover@v0.1.4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          project_language: go
+          project_root: templated_tests/go/taskmgr
+          code_coverage_report_path: templated_tests/go/taskmgr/coverage.xml
+          test_command: "go test ./... -coverprofile=coverage.out && gocover-cobertura < coverage.out > coverage.xml"
+          model: gpt-4o
+          desired_coverage: ${{ github.event.inputs.desired_coverage }}
+          run_each_test_separately: "false"
+          branch: ${{ github.ref_name }}
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
