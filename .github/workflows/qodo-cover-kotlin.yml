@@ -1,4 +1,4 @@
-name: Run the qodo-cover action (Java)
+name: Run the qodo-cover action (Kotlin)
 
 on:
   workflow_dispatch:
