@@ -27,6 +27,13 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
+      - name: Setup Gradle
+        working-directory: templated_tests/kotlin/taskmgr
+        run: |
+          chmod +x ./gradlew
+          # Run initial Gradle setup to avoid timeouts later
+          ./gradlew clean
+
       - name: Qodo Cover
         uses: qodo-ai/qodo-ci/.github/actions/qodo-cover@v0.1.4
         with:
