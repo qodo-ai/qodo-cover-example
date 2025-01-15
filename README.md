@@ -14,16 +14,20 @@ In both of the above actions if the agent successfully increases coverage it wil
 - Python
 - PHP
 - Java
+- Go
+- Kotlin
 - More coming soon!
 
 ## Workflow examples
 
 To use a Qodo Cover GitHub Action, you need to add it to your GitHub workflow. Take a look at the following working examples:
 
-- [`.github/workflows/qodo-cover-pr-python.yml`](.github/workflows/qodo-cover-pr-python.yml). This workflow triggers on pull requests and runs the agent in "pr" mode on the Python project in `templated_tests/python-fastapi`.
-- [`.github/workflows/qodo-cover-python.yml`](.github/workflows/qodo-cover-python.yml). This workflow is triggered manually and runs the agent on the Python project in `templated_tests/python-fastapi`.
-- [`.github/workflows/qodo-cover-java.yml`](.github/workflows/qodo-cover-java.yml). This workflow is triggered manually and runs the agent on the Java project in `templated_tests/java/JokeFunction`.
-- [`.github/workflows/qodo-cover-php.yml`](.github/workflows/qodo-cover-php.yml). This workflow is triggered manually and runs the agent on the PHP project in `templated_tests/php/myapp`.
+- [`.github/workflows/qodo-cover-pr-python.yml`](.github/workflows/qodo-cover-pr-python.yml). This workflow triggers on pull requests and runs the agent in "pr" mode on the **Python** project in `templated_tests/python-fastapi`.
+- [`.github/workflows/qodo-cover-python.yml`](.github/workflows/qodo-cover-python.yml). This workflow is triggered manually and runs the agent on the **Python** project in `templated_tests/python-fastapi`.
+- [`.github/workflows/qodo-cover-java.yml`](.github/workflows/qodo-cover-java.yml). This workflow is triggered manually and runs the agent on the **Java** project in `templated_tests/java/JokeFunction`.
+- [`.github/workflows/qodo-cover-php.yml`](.github/workflows/qodo-cover-php.yml). This workflow is triggered manually and runs the agent on the **PHP** project in `templated_tests/php/myapp`.
+- [`.github/workflows/qodo-cover-go.yml`](.github/workflows/qodo-cover-go.yml). This workflow is triggered manually and runs the agent on the **Go** project in `templated_tests/go/taskmgr`.
+- [`.github/workflows/qodo-cover-kotlin.yml`](.github/workflows/qodo-cover-kotlin.yml). This workflow is triggered manually and runs the agent on the **Kotlin** project in `templated_tests/kotlin/taskmgr`.
 
 **Remember to enable GitHub Actions to create pull requests:** This setting can be found in a repository's settings under Actions > General > Workflow permissions.
 
