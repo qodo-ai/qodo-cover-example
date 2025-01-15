@@ -58,3 +58,71 @@ func TestFileStore(t *testing.T) {
 		t.Errorf("Expected persisted 'Updated' task, got %v", list)
 	}
 }
+
+func TestFileStoreRemoveInvalidIndex(t *testing.T) {
+    dir, err := ioutil.TempDir("", "taskmgr_test")
+    if err != nil {
+        t.Fatalf("Failed to create temp dir: %v", err)
+    }
+    defer os.RemoveAll(dir)
+
+    testFile := filepath.Join(dir, "tasks.json")
+    store := NewFileStore(testFile)
+
+    // Add a task to ensure the file is created
+    if err := store.Add(Task{Title: "Example"}); err != nil {
+        t.Fatalf("Add returned an error: %v", err)
+    }
+
+    err = store.Remove(1) // Invalid index
+    if err == nil {
+        t.Error("Expected error when removing task at invalid index, got nil")
+    }
+}
+
+
+func TestFileStoreListInvalidJSON(t *testing.T) {
+    dir, err := ioutil.TempDir("", "taskmgr_test")
+    if err != nil {
+        t.Fatalf("Failed to create temp dir: %v", err)
+    }
+    defer os.RemoveAll(dir)
+
+    testFile := filepath.Join(dir, "tasks.json")
+    store := NewFileStore(testFile)
+
+    // Create a file with invalid JSON
+    err = ioutil.WriteFile(testFile, []byte("{invalid json"), 0644)
+    if err != nil {
+        t.Fatalf("Failed to write to test file: %v", err)
+    }
+
+    list := store.List()
+    if len(list) != 0 {
+        t.Errorf("Expected empty list due to invalid JSON, got %d tasks", len(list))
+    }
+}
+
+
+func TestFileStoreAddReadError(t *testing.T) {
+    dir, err := ioutil.TempDir("", "taskmgr_test")
+    if err != nil {
+        t.Fatalf("Failed to create temp dir: %v", err)
+    }
+    defer os.RemoveAll(dir)
+
+    testFile := filepath.Join(dir, "tasks.json")
+    store := NewFileStore(testFile)
+
+    // Create a file with invalid JSON to simulate a read error
+    err = ioutil.WriteFile(testFile, []byte("{invalid json"), 0644)
+    if err != nil {
+        t.Fatalf("Failed to write to test file: %v", err)
+    }
+
+    err = store.Add(Task{Title: "Example"})
+    if err == nil {
+        t.Error("Expected error when adding task due to read error, got nil")
+    }
+}
+
