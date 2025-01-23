@@ -58,3 +58,91 @@ func TestFileStore(t *testing.T) {
 		t.Errorf("Expected persisted 'Updated' task, got %v", list)
 	}
 }
+
+func TestRemoveLoadTasksError(t *testing.T) {
+    dir, err := ioutil.TempDir("", "taskmgr_test")
+    if err != nil {
+        t.Fatalf("Failed to create temp dir: %v", err)
+    }
+    defer os.RemoveAll(dir)
+
+    testFile := filepath.Join(dir, "tasks.json")
+    store := NewFileStore(testFile)
+
+    // Create a file with invalid JSON to simulate load error
+    if err := ioutil.WriteFile(testFile, []byte("{invalid json"), 0644); err != nil {
+        t.Fatalf("Failed to write invalid JSON: %v", err)
+    }
+
+    err = store.Remove(0)
+    if err == nil {
+        t.Error("Expected error when removing task with invalid JSON file, got nil")
+    }
+}
+
+
+func TestUpdateLoadTasksError(t *testing.T) {
+    dir, err := ioutil.TempDir("", "taskmgr_test")
+    if err != nil {
+        t.Fatalf("Failed to create temp dir: %v", err)
+    }
+    defer os.RemoveAll(dir)
+
+    testFile := filepath.Join(dir, "tasks.json")
+    store := NewFileStore(testFile)
+
+    // Create a file with invalid JSON to simulate load error
+    if err := ioutil.WriteFile(testFile, []byte("{invalid json"), 0644); err != nil {
+        t.Fatalf("Failed to write invalid JSON: %v", err)
+    }
+
+    err = store.Update(0, Task{Title: "Updated"})
+    if err == nil {
+        t.Error("Expected error when updating task with invalid JSON file, got nil")
+    }
+}
+
+
+func TestListLoadTasksError(t *testing.T) {
+    dir, err := ioutil.TempDir("", "taskmgr_test")
+    if err != nil {
+        t.Fatalf("Failed to create temp dir: %v", err)
+    }
+    defer os.RemoveAll(dir)
+
+    testFile := filepath.Join(dir, "tasks.json")
+    store := NewFileStore(testFile)
+
+    // Create a file with invalid JSON to simulate load error
+    if err := ioutil.WriteFile(testFile, []byte("{invalid json"), 0644); err != nil {
+        t.Fatalf("Failed to write invalid JSON: %v", err)
+    }
+
+    list := store.List()
+    if len(list) != 0 {
+        t.Errorf("Expected empty list on load error, got %d tasks", len(list))
+    }
+}
+
+
+func TestAddLoadTasksError(t *testing.T) {
+    dir, err := ioutil.TempDir("", "taskmgr_test")
+    if err != nil {
+        t.Fatalf("Failed to create temp dir: %v", err)
+    }
+    defer os.RemoveAll(dir)
+
+    testFile := filepath.Join(dir, "tasks.json")
+    store := NewFileStore(testFile)
+
+    // Create a file with invalid JSON to simulate load error
+    if err := ioutil.WriteFile(testFile, []byte("{invalid json"), 0644); err != nil {
+        t.Fatalf("Failed to write invalid JSON: %v", err)
+    }
+
+    err = store.Add(Task{Title: "Example"})
+    if err == nil {
+        t.Error("Expected error when adding task with invalid JSON file, got nil")
+    }
+}
+
