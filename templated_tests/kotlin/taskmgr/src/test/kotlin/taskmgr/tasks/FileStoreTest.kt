@@ -69,4 +69,59 @@ class FileStoreTest {
         assertEquals("Persistent Task", firstTask.title)
     }
 
+    @Test
+    fun clearAllTasks() {
+        val task1 = Task("Task 1")
+        val task2 = Task("Task 2")
+        fileStore.add(task1)
+        fileStore.add(task2)
+    
+        assertDoesNotThrow { fileStore.clearAll() }
+    
+        val tasks = fileStore.list()
+        assertTrue(tasks.isEmpty())
+    }
+
+
+    @Test
+    fun markAllTasksAsDone() {
+        val task1 = Task("Task 1")
+        val task2 = Task("Task 2")
+        fileStore.add(task1)
+        fileStore.add(task2)
+    
+        assertDoesNotThrow { fileStore.markAllDone() }
+    
+        val tasks = fileStore.list()
+        assertTrue(tasks.all { it.done })
+    }
+
+
+    @Test
+    fun updateTaskTitleAtIndex() {
+        val task = Task("Old Title")
+        fileStore.add(task)
+    
+        assertDoesNotThrow { fileStore.update(0, "New Title") }
+    
+        val tasks = fileStore.list()
+        assertEquals("New Title", tasks[0].title)
+    }
+
+
+    @Test
+    fun removeTaskAtIndex() {
+        val task1 = Task("Task 1")
+        val task2 = Task("Task 2")
+        fileStore.add(task1)
+        fileStore.add(task2)
+    
+        assertDoesNotThrow { fileStore.remove(0) }
+    
+        val tasks = fileStore.list()
+        assertEquals(1, tasks.size)
+        assertEquals("Task 2", tasks[0].title)
+    }
+
+
 }
