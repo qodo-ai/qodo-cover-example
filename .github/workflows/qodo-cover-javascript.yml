@@ -10,7 +10,7 @@ on:
 
 permissions:
   pull-requests: write
-  contents: read
+  contents: write
 
 jobs:
   run-qodo-cover-js:

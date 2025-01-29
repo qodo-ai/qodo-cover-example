@@ -10,10 +10,10 @@ on:
 
 permissions:
   pull-requests: write
-  contents: read
+  contents: write
 
 jobs:
-  run-qodo-cover-js:
+  run-qodo-cover-ts:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout code
