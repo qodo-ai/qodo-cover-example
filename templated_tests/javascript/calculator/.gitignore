@@ -1,0 +1,8 @@
+.nyc_output
+.parcel-cache
+coverage
+dist
+node_modules
+*.db
+*.log
+test_results.html
