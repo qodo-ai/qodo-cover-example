@@ -20,5 +20,27 @@ describe('AdvancedCalculator', () => {
         expect(calc.onDisplay).to.equal('120');
     });
 
+    it('should compute sqrt correctly', () => {
+        // Press digits "9"
+        calc.buttonPressed({ type: 'number', value: '9' });
+        expect(calc.onDisplay).to.equal('9');
+    
+        // sqrt of 9
+        const result = calc.sqrt();
+        expect(result).to.equal(3);
+        expect(calc.onDisplay).to.equal('3');
+    });
+
+
+    it('should throw an error when no number on display for sqrt', () => {
+        expect(() => calc.sqrt()).to.throw('No number on display to compute sqrt');
+    });
+
+
+    it('should throw an error when no number on display for factorial', () => {
+        expect(() => calc.factorial()).to.throw('No number on display to compute factorial');
+    });
+
+
 
 });

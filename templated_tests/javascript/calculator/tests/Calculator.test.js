@@ -75,4 +75,37 @@ describe('basic', () => {
 
     expect(calc.onDisplay).to.equal('100.01');
   });
+
+  it('clears display correctly', () => {
+    const calc = new Calculator();
+    calc.buttonPressed({ type: 'number', value: '5' });
+    calc.buttonPressed({ type: 'operator', value: '+' });
+    calc.buttonPressed({ type: 'number', value: '3' });
+    calc.buttonPressed({ type: 'operator', value: 'clear' });
+    expect(calc.onDisplay).to.be.null;
+    expect(calc.currentTotal).to.be.null;
+    expect(calc.currentOperator).to.be.null;
+    expect(calc.lastOperator).to.be.null;
+  });
+
+
+  it('switches polarity correctly', () => {
+    const calc = new Calculator();
+    calc.buttonPressed({ type: 'number', value: '5' });
+    calc.buttonPressed({ type: 'operator', value: 'switchPolarity' });
+    expect(calc.onDisplay).to.equal('-5');
+    calc.buttonPressed({ type: 'operator', value: 'switchPolarity' });
+    expect(calc.onDisplay).to.equal('5');
+  });
+
+
+  it('performs addition correctly', () => {
+    const calc = new Calculator();
+    calc.buttonPressed({ type: 'number', value: '5' });
+    calc.buttonPressed({ type: 'operator', value: '+' });
+    calc.buttonPressed({ type: 'number', value: '3' });
+    calc.buttonPressed({ type: 'operator', value: 'evaluate' });
+    expect(calc.onDisplay).to.equal('8');
+  });
+
 });
