@@ -16,6 +16,8 @@ In both of the above actions if the agent successfully increases coverage it wil
 - Java
 - Go
 - Kotlin
+- Javascript
+- Typescript
 - More coming soon!
 
 ## Workflow examples
@@ -28,6 +30,8 @@ To use a Qodo Cover GitHub Action, you need to add it to your GitHub workflow. T
 - [`.github/workflows/qodo-cover-php.yml`](.github/workflows/qodo-cover-php.yml). This workflow is triggered manually and runs the agent on the **PHP** project in `templated_tests/php/myapp`.
 - [`.github/workflows/qodo-cover-go.yml`](.github/workflows/qodo-cover-go.yml). This workflow is triggered manually and runs the agent on the **Go** project in `templated_tests/go/taskmgr`.
 - [`.github/workflows/qodo-cover-kotlin.yml`](.github/workflows/qodo-cover-kotlin.yml). This workflow is triggered manually and runs the agent on the **Kotlin** project in `templated_tests/kotlin/taskmgr`.
+- [`.github/workflows/qodo-cover-javascript.yml`](.github/workflows/qodo-cover-javascript.yml). This workflow is triggered manually and runs the agent on the **Javascript** project in `templated_tests/javascript/calculator`.
+- [`.github/workflows/qodo-cover-typescript.yml`](.github/workflows/qodo-cover-typescript.yml). This workflow is triggered manually and runs the agent on the **Typescript** project in `templated_tests/typescript/calculator`.
 
 **Remember to enable GitHub Actions to create pull requests:** This setting can be found in a repository's settings under Actions > General > Workflow permissions.
 
