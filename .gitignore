@@ -12,6 +12,7 @@
 coverage.xml
 cobertura.xml
 testLog.xml
+qodo-ci-example.md
 
 # Caches
 __pycache__
@@ -22,6 +23,7 @@ generated_prompt.md
 test_results.html
 run.log
 *.db
+qodo-ci-example.md
 
 # PyInstaller Generated files
 /build/
@@ -47,3 +49,6 @@ pip-delete-this-directory.txt
 
 # Secrets
 .env
+.secrets
+
+# binary
