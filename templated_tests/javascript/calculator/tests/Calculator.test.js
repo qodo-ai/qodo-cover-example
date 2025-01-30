@@ -75,4 +75,35 @@ describe('basic', () => {
 
     expect(calc.onDisplay).to.equal('100.01');
   });
+
+  it('Handles clear button', () => {
+    const calc = new Calculator();
+    calc.buttonPressed({ type: 'number', value: '9' });
+    calc.buttonPressed({ type: 'operator', value: '+' });
+    calc.buttonPressed({ type: 'number', value: '1' });
+    calc.buttonPressed({ type: 'operator', value: 'clear' });
+    expect(calc.onDisplay).to.equal(null);
+    expect(calc.currentTotal).to.equal(null);
+  });
+
+
+  it('Switches polarity of a number', () => {
+    const calc = new Calculator();
+    calc.buttonPressed({ type: 'number', value: '5' });
+    calc.buttonPressed({ type: 'operator', value: 'switchPolarity' });
+    expect(calc.onDisplay).to.equal('-5');
+    calc.buttonPressed({ type: 'operator', value: 'switchPolarity' });
+    expect(calc.onDisplay).to.equal('5');
+  });
+
+
+  it('Evaluates simple addition', () => {
+    const calc = new Calculator();
+    calc.buttonPressed({ type: 'number', value: '2' });
+    calc.buttonPressed({ type: 'operator', value: '+' });
+    calc.buttonPressed({ type: 'number', value: '3' });
+    calc.buttonPressed({ type: 'operator', value: 'evaluate' });
+    expect(calc.onDisplay).to.equal('5');
+  });
+
 });
