@@ -5,15 +5,21 @@ on:
     branches:
       - main
     types:
-      - opened  # Trigger only when a pull request is opened
+      - labeled
 
 permissions:
   pull-requests: write  # Allows commenting on pull requests
-  contents: write  # Allows reading and writing files
+  contents: write  # Allows reading files and creating pull requests
 
 jobs:
   run-qodo-cover-pr-python:
-    if: ${{ github.actor != 'github-actions[bot]' }}
+    # Only run if:
+    # 1. PR has the qodo-cover label
+    # 2. PR is open (not closed or draft)
+    if: |
+      contains(github.event.label.name, 'qodo-cover') &&
+      github.event.pull_request.state == 'open' &&
+      github.event.pull_request.draft == false
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout PR branch
